@@ -1,0 +1,10 @@
+# Dev environment
+autopep8
+flake8
+
+# App
+flask
+sqlalchemy
+Flask-SQLAlchemy
+jinja2
+requests
