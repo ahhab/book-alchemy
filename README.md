@@ -31,14 +31,11 @@ To get the application running on your local machine, follow these steps:
     pip install -r requirements.txt
     ```
 
-3.  **Run the Development Server:** A simple shell script is provided to start the Flask development server.
+3.  **Run the Server:** A simple shell script is provided to start the Flask development server. This derives from the exercise: 
 
     ```bash
-    # Make sure the script is executable
-    chmod +x ./devserver.sh
-
     # Run the server
-    ./devserver.sh
+    python3 -m flask app
     ```
 
 Once the server is running, you can access the application in your web browser at the address provided in the terminal (usually `http://127.0.0.1:5000`).
