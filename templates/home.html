@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>My Library</h1>
@@ -11,12 +12,16 @@
         <a href="{{ url_for('home', sort_by='author') }}">Sort by Author</a>
     </div>
     <hr>
-    {% for book in books %}
-        <div>
-            <img src="{{ book.cover_url }}" alt="Cover for {{ book.title }}">
-            <h3>{{ book.title }}</h3>
-            <p>by {{ book.author }}</p>
-        </div>
-    {% endfor %}
+    <div class="book-list">
+        {% for book in books %}
+            <div class="book-item">
+                <img src="{{ book.cover_url }}" alt="Cover for {{ book.title }}">
+                <h3>{{ book.title }}</h3>
+                <p>by {{ book.author }}</p>
+            </div>
+        {% else %}
+            <p>No books found in the library. Why not <a href="{{ url_for('add_book') }}">add one</a>?</p>
+        {% endfor %}
+    </div>
 </body>
 </html>

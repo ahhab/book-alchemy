@@ -17,9 +17,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Recommended to suppress a
 db.init_app(app)
 
 # 4. Create database tables within the application context
-# This is commented out to prevent it from running every time the app starts.
-# with app.app_context():
-#   db.create_all()
+with app.app_context():
+  db.create_all()
 
 @app.route('/')
 def home():
@@ -75,4 +74,6 @@ def add_book():
     return render_template('add_book.html', authors=authors)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+  with app.app_context():
+    db.create_all()
+  app.run(debug=True)
