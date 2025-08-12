@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Library</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Home - My Library{% endblock %}
+
+{% block content %}
     <h1>My Library</h1>
     <div>
         <a href="{{ url_for('home', sort_by='title') }}">Sort by Title</a> |
@@ -27,5 +24,4 @@
             <p>No books found in the library. Why not <a href="{{ url_for('add_book') }}">add one</a>?</p>
         {% endfor %}
     </div>
-</body>
-</html>
+{% endblock %}
