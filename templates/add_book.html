@@ -19,7 +19,7 @@
         <label for="author">Author:</label><br>
         <select id="author" name="author" required>
             {% for author in authors %}
-                <option value="{{ author.id }}">{{ author.name }}</option>
+                <option value="{{ author.id }}" {% if author.id == selected_author_id %}selected{% endif %}>{{ author.name }}</option>
             {% endfor %}
         </select><br>
         <p>Can't find the author? <a href="{{ url_for('add_author') }}">Add a new one</a>.</p>

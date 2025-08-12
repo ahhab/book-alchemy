@@ -11,6 +11,10 @@
         <a href="{{ url_for('home', sort_by='title') }}">Sort by Title</a> |
         <a href="{{ url_for('home', sort_by='author') }}">Sort by Author</a>
     </div>
+    <div>
+        <a href="{{ url_for('add_book') }}">Add Book</a> |
+        <a href="{{ url_for('add_author') }}">Add Author</a>
+    </div>
     <hr>
     <div class="book-list">
         {% for book in books %}

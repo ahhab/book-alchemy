@@ -52,8 +52,8 @@ def add_author():
         new_author = Author(name=name, birth_date=birth_date)
         db.session.add(new_author)
         db.session.commit()
-        flash('Author added successfully!', 'success')
-        return redirect(url_for('add_author'))
+        flash('Author added successfully! Now add their book.', 'success')
+        return redirect(url_for('add_book', author_id=new_author.id))
     return render_template('add_author.html')
 
 @app.route('/add_book', methods=['GET', 'POST'])
@@ -71,7 +71,8 @@ def add_book():
         return redirect(url_for('add_book'))
     
     authors = Author.query.all()
-    return render_template('add_book.html', authors=authors)
+    selected_author_id = request.args.get('author_id', type=int)
+    return render_template('add_book.html', authors=authors, selected_author_id=selected_author_id)
 
 if __name__ == '__main__':
   with app.app_context():
