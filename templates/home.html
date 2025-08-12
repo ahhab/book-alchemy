@@ -17,13 +17,14 @@
         <input type="text" name="q" placeholder="Search for a book title..." value="{{ request.args.get('q', '') }}">
         <input type="submit" value="Search">
     </form>
+    <hr>
     <div class="book-list">
         {% for book in books %}
             <div class="book-item">
                 <img src="{{ book.cover_url }}" alt="Cover for {{ book.title }}">
                 <h3>{{ book.title }}</h3>
                 <p>by {{ book.author }}</p>
-                <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
                     <input type="submit" value="Delete Book">
                 </form>
             </div>

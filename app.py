@@ -76,7 +76,7 @@ def add_book():
         db.session.add(new_book)
         db.session.commit()
         flash('Book added successfully!', 'success')
-        return redirect(url_for('add_book'))
+        return redirect(url_for('home'))
     
     authors = Author.query.all()
     selected_author_id = request.args.get('author_id', type=int)
@@ -87,18 +87,24 @@ def delete_book(book_id):
     book = Book.query.get_or_404(book_id)
     author = book.author
     db.session.delete(book)
+    db.session.flush()
 
-    # Check if the author has any other books
     if not author.books:
         db.session.delete(author)
-        flash(f'Book "{book.title}" and author "{author.name}" were deleted.', 'success')
-    else:
-        flash(f'Book "{book.title}" was deleted.', 'success')
         
     db.session.commit()
+    flash(f'Book "{book.title}" has been deleted.', 'success')
     return redirect(url_for('home'))
 
-if __name__ == '__main__':
-  with app.app_context():
-    db.create_all()
-  app.run(debug=True)
+@app.route('/author/<int:author_id>/delete', methods=['POST'])
+def delete_author(author_id):
+    author = Author.query.get_or_404(author_id)
+    author_name = author.name
+    
+    for book in author.books:
+        db.session.delete(book)
+        
+    db.session.delete(author)
+    db.session.commit()
+    flash(f'Author "{author_name}" and all their books have been deleted.', 'success')
+    return redirect(url_for('home'))
