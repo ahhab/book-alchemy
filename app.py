@@ -22,11 +22,18 @@ with app.app_context():
 
 @app.route('/')
 def home():
+    query = request.args.get('q')
     sort_by = request.args.get('sort_by', 'title')
-    if sort_by == 'author':
-        books = Book.query.join(Author).order_by(Author.name).all()
+
+    if query:
+        books = Book.query.filter(Book.title.like(f"%{query}%"))
     else:
-        books = Book.query.order_by(Book.title).all()
+        books = Book.query
+
+    if sort_by == 'author':
+        books = books.join(Author).order_by(Author.name).all()
+    else:
+        books = books.order_by(Book.title).all()
 
     book_list = []
     for book in books:

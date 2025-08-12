@@ -13,6 +13,10 @@
         <a href="{{ url_for('add_author') }}">Add Author</a>
     </div>
     <hr>
+    <form method="GET" action="{{ url_for('home') }}">
+        <input type="text" name="q" placeholder="Search for a book title..." value="{{ request.args.get('q', '') }}">
+        <input type="submit" value="Search">
+    </form>
     <div class="book-list">
         {% for book in books %}
             <div class="book-item">
@@ -21,7 +25,11 @@
                 <p>by {{ book.author }}</p>
             </div>
         {% else %}
-            <p>No books found in the library. Why not <a href="{{ url_for('add_book') }}">add one</a>?</p>
+            {% if request.args.get('q') %}
+                <p>No books found matching your search: <strong>{{ request.args.get('q') }}</strong>.</p>
+            {% else %}
+                <p>No books found in the library. Why not <a href="{{ url_for('add_book') }}">add one</a>?</p>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
