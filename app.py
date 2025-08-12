@@ -38,6 +38,7 @@ def home():
     book_list = []
     for book in books:
         book_info = {
+            'id': book.id,
             'title': book.title,
             'author': book.author.name,
             'cover_url': f"https://covers.openlibrary.org/b/isbn/{book.isbn}-M.jpg"
@@ -80,6 +81,22 @@ def add_book():
     authors = Author.query.all()
     selected_author_id = request.args.get('author_id', type=int)
     return render_template('add_book.html', authors=authors, selected_author_id=selected_author_id)
+
+@app.route('/book/<int:book_id>/delete', methods=['POST'])
+def delete_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    author = book.author
+    db.session.delete(book)
+
+    # Check if the author has any other books
+    if not author.books:
+        db.session.delete(author)
+        flash(f'Book "{book.title}" and author "{author.name}" were deleted.', 'success')
+    else:
+        flash(f'Book "{book.title}" was deleted.', 'success')
+        
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
   with app.app_context():
