@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 import os
 import requests
 from data_models import db, Author, Book
@@ -6,7 +6,6 @@ from datetime import datetime
 
 # 1. Initialize the Flask app
 app = Flask(__name__)
-app.secret_key = 'your_secret_key' # Needed for flashing messages
 
 # 2. Configure the database URI
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -60,7 +59,6 @@ def add_author():
         new_author = Author(name=name, birth_date=birth_date)
         db.session.add(new_author)
         db.session.commit()
-        flash('Author added successfully! Now add their book.', 'success')
         return redirect(url_for('add_book', author_id=new_author.id))
     return render_template('add_author.html')
 
@@ -75,7 +73,6 @@ def add_book():
         new_book = Book(title=title, isbn=isbn, publication_year=publication_year, author_id=author_id)
         db.session.add(new_book)
         db.session.commit()
-        flash('Book added successfully!', 'success')
         return redirect(url_for('home'))
     
     authors = Author.query.all()
@@ -93,7 +90,6 @@ def delete_book(book_id):
         db.session.delete(author)
         
     db.session.commit()
-    flash(f'Book "{book.title}" has been deleted.', 'success')
     return redirect(url_for('home'))
 
 @app.route('/author/<int:author_id>/delete', methods=['POST'])
@@ -106,5 +102,4 @@ def delete_author(author_id):
         
     db.session.delete(author)
     db.session.commit()
-    flash(f'Author "{author_name}" and all their books have been deleted.', 'success')
     return redirect(url_for('home'))
