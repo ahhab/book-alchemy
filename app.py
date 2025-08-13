@@ -103,3 +103,6 @@ def delete_author(author_id):
     db.session.delete(author)
     db.session.commit()
     return redirect(url_for('home'))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5002, debug=True)
