@@ -1,7 +1,8 @@
 # Book-Alchemy: A Flask Digital Library
 
 This project is a simple digital library web application built with Python, Flask, and SQLAlchemy. It was created as part of a [Masterschool.com](https://masterschool.com/) course to demonstrate foundational web development concepts with the Flask micro-framework.
-To run in codio with masterschool configuration, Port 5002: click "Run Flask app" - click "Box URL" - change URL to https://$HOSTNAME-$PORT.codio.io/  with PORT = 5002
+Different from the original exercise the app is configured in codio to host on port 3000 to match the codio defaults. 
+If you want it to run in codio with the configuration from the exercise, Port 5002: edit run configuration to Port 5002, click "Run Flask app" - click "Box URL" - change URL to https://$HOSTNAME-$PORT.codio.io/  with PORT = 5002
 
 ## Project Status & Disclaimer
 
