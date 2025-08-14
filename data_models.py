@@ -3,6 +3,7 @@ from datetime import date
 
 db = SQLAlchemy()
 
+
 class Author(db.Model):
     """
     Represents an Author in the database.
@@ -31,9 +32,12 @@ class Author(db.Model):
         """
         Provides a user-friendly string representation of the Author object.
         """
-        birth_str = self.birth_date.strftime('%Y-%m-%d') if self.birth_date else 'N/A'
-        death_str = self.date_of_death.strftime('%Y-%m-%d') if self.date_of_death else 'N/A'
+        birth_str = self.birth_date.strftime(
+            '%Y-%m-%d') if self.birth_date else 'N/A'
+        death_str = self.date_of_death.strftime(
+            '%Y-%m-%d') if self.date_of_death else 'N/A'
         return f"Author: {self.name} (Born: {birth_str}, Died: {death_str})"
+
 
 class Book(db.Model):
     """
@@ -50,8 +54,8 @@ class Book(db.Model):
     isbn = db.Column(db.String(13), unique=True, nullable=False)
     title = db.Column(db.String(200), nullable=False)
     publication_year = db.Column(db.Integer, nullable=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-
+    author_id = db.Column(db.Integer, db.ForeignKey(
+        'author.id'), nullable=False)
 
     def __repr__(self):
         """
